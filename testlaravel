@@ -1,0 +1,102 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4 text-center">Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Ringkasan -->
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #48c78e, #34a16b); border-radius: 12px;">
+                <div class="card-body text-center">
+                    <i class="fas fa-box fa-3x mb-3" style="opacity: 0.8;"></i>
+                    <h5 class="card-title">Total Produk</h5>
+                    <p class="card-text fs-4">{{ $totalProduk }} Produk</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #4c9bdc, #1f7bbc); border-radius: 12px;">
+                <div class="card-body text-center">
+                    <i class="fas fa-cubes fa-3x mb-3" style="opacity: 0.8;"></i>
+                    <h5 class="card-title">Total Bahan</h5>
+                    <p class="card-text fs-4">{{ $totalBahan }} Bahan</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #f6c23e, #f4b501); border-radius: 12px;">
+                <div class="card-body text-center">
+                    <i class="fas fa-shopping-cart fa-3x mb-3" style="opacity: 0.8;"></i>
+                    <h5 class="card-title">Transaksi Hari Ini</h5>
+                    <p class="card-text fs-4">{{ $transaksiHariIni }} Transaksi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Produk Terlaris -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-chart-line text-primary me-2"></i>Produk Terlaris</h5>
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nama Produk</th>
+                                <th>Jumlah Terjual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($produkTerlaris as $produk)
+                            <tr>
+                                <td>{{ $produk->nama_produk }}</td>
+                                <td>{{ $produk->detailtransaksi_count }} kali terjual</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stok Menipis -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Stok Bahan Menipis</h5>
+                    @if($stokMenipis->isEmpty())
+                        <p class="text-success fs-5">Semua bahan cukup.</p>
+                    @else
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nama Bahan</th>
+                                    <th>Jumlah Stok</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($stokMenipis as $bahan)
+                                <tr>
+                                    <td>{{ $bahan->nama_bahan }}</td>
+                                    <td>{{ $bahan->jumlah_stok }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
